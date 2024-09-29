@@ -1,0 +1,22 @@
+services:
+  jenkins:
+    container_name: jenkins_new  # Renamed to avoid conflict
+    image: jenkins/jenkins:lts-jdk11
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    networks:
+      - jenkins
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins-home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    restart: unless-stopped
+
+networks:
+  jenkins:
+
+volumes:
+  jenkins-home:
